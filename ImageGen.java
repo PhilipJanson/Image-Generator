@@ -41,7 +41,7 @@ public class ImageGen {
 
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
-				matrix[x][y] = new Color(image.getRGB(x, y));
+				matrix[x][y] = new Color(image.getRGB(x, y), true);
 			}
 		}
 
@@ -68,8 +68,16 @@ public class ImageGen {
 		output = output.substring(0, output.length() - 2);
 		output += "\n\n]\n\nsense.set_pixels(image_pixels)";
 
-		try (PrintStream ps = new PrintStream(new FileOutputStream(imgName.replace(".png", "").replace(".jpg", "") + ".py"))) {
+		File gen = new File("gen/");
+		String outName = "gen/" + imgName.replace(".png", "").replace(".jpg", "") + ".py";
+		
+		if (!gen.exists()) {
+			gen.mkdir();
+		}
+		
+		try (PrintStream ps = new PrintStream(new FileOutputStream(new File(outName)))) {
 			ps.print(output);
+			System.out.println("ImageGen successful. Python file created (" + outName + ")");
 		}
 	}
 }
