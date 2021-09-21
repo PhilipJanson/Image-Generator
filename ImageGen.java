@@ -37,19 +37,11 @@ public class ImageGen {
 			return;
 		}
 
-		Color[][] matrix = new Color[8][8];
-
-		for (int x = 0; x < 8; x++) {
-			for (int y = 0; y < 8; y++) {
-				matrix[x][y] = new Color(image.getRGB(x, y), true);
-			}
-		}
-
 		String output = "from sense_hat import SenseHat\n\n\nsense = SenseHat()\n\n\nimage_pixels = [\n\n";
 
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
-				Color color = matrix[x][y];
+				Color color = new Color(image.getRGB(x, y), true);
 
 				if (color.getAlpha() != 0) {
 					output += "(" + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + ")";
